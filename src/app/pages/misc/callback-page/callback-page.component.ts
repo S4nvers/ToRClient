@@ -11,10 +11,10 @@ export class CallbackPageComponent implements OnInit {
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-      const token = this.route.snapshot.queryParamMap.get('token');
-      // Handle token
-      // ...
-      //this.router.navigate(['./host']);
+      const token = this.route.snapshot.queryParamMap.get('code');
+      
+      //TODO: make post request
+      //TODO: redirect
   }
 
 }

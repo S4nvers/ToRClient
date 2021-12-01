@@ -20,7 +20,7 @@ export class RedditAPIService {
         userAgent: 'ToRClient by S4nvers',
         clientId: 'g5nizpPrI801MZo8Xia6DA',
         clientSecret: 'Not today', //IMPORTANT: NEVER COMMIT THIS
-        refreshToken: this.auth.getToken()//'43854070-y2jk67l-SvrXFlRg8JYtrNWK48O8kg' //TODO need to obtain dynamically instead of hardcoded
+        refreshToken: this.auth.getToken() //TODO need to obtain dynamically instead of hardcoded
       });
     }
     return RedditAPIService.snoowrap
