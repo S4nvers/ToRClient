@@ -1,29 +1,35 @@
 import { Injectable } from '@angular/core';
-import * as sw from 'snoowrap';
+import * as Snoowrap from 'snoowrap';
 import { RedditAPIComment, RedditAPIFlair, RedditAPIPost, RedditAPISubRule, RedditAPIUser, RedditAPIWikiPage } from '../../../../types/RedditAPITypes';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RedditAPIService {
 
-  snoowrap: sw;
+  static snoowrap: Snoowrap;
 
   readonly SUBNAME: string = 'TranscribersOfReddit';
 
-  constructor() {
-    this.snoowrap = new sw({
+  constructor(private auth: AuthService) {}
+
+  private getSnoowrap(): Snoowrap {
+    if(!RedditAPIService.snoowrap) {
+      RedditAPIService.snoowrap = new Snoowrap({
         userAgent: 'ToRClient by S4nvers',
-        clientId: 'QXujvwQwWVDuJAyt6TJOGQ',
-        clientSecret: 'MLk28yhvxFIRhKfc_1Gjdsn2-85_SQ', //IMPORTANT: NEVER COMMIT THIS
-        refreshToken: '43854070-kyJ6LVPOjPFyTokNbFSuisqE-Xo8ag' //TODO need to obtain dynamically instead of hardcoded
+        clientId: 'g5nizpPrI801MZo8Xia6DA',
+        clientSecret: 'Not today', //IMPORTANT: NEVER COMMIT THIS
+        refreshToken: this.auth.getToken()//'43854070-y2jk67l-SvrXFlRg8JYtrNWK48O8kg' //TODO need to obtain dynamically instead of hardcoded
       });
+    }
+    return RedditAPIService.snoowrap
   }
 
   /* #region GET */
 
   getAllPosts(): Promise<RedditAPIPost[]> {
-    return this.snoowrap.getSubreddit(this.SUBNAME).getHot().then(response => {
+    return this.getSnoowrap().getSubreddit(this.SUBNAME).getHot().then(response => {
       return response.map<RedditAPIPost>(post => {
         var flair: RedditAPIFlair | null = null;
         if(post.link_flair_template_id) {
@@ -43,7 +49,7 @@ export class RedditAPIService {
   }
 
   getComments(submissionId: string): Promise<RedditAPIComment[]> {
-    return this.snoowrap.getSubmission(submissionId).expandReplies({limit: Infinity, depth: Infinity}).then(response => {
+    return this.getSnoowrap().getSubmission(submissionId).expandReplies({limit: Infinity, depth: Infinity}).then(response => {
       return response.comments.map<RedditAPIComment>(comment => {
         return {
           id: comment.id,
@@ -54,7 +60,7 @@ export class RedditAPIService {
   }
 
   getRules(sub: string): Promise<RedditAPISubRule[]> {
-    return this.snoowrap.getSubreddit(sub).getRules().then(response => {
+    return this.getSnoowrap().getSubreddit(sub).getRules().then(response => {
       return response.rules.map<RedditAPISubRule>(rule => {
         return {
           short: rule.short_name,
@@ -67,7 +73,7 @@ export class RedditAPIService {
   }
 
   getWikiPage(pageName: string): Promise<RedditAPIWikiPage> {
-    return this.snoowrap.getSubreddit(this.SUBNAME).getWikiPage(pageName).fetch().then(response => {
+    return this.getSnoowrap().getSubreddit(this.SUBNAME).getWikiPage(pageName).fetch().then(response => {
       return {
         name: pageName,
         html: response.content_html,
@@ -76,7 +82,7 @@ export class RedditAPIService {
   }
 
   getUserGamma(): Promise<RedditAPIFlair> {
-    return this.snoowrap.getSubreddit(this.SUBNAME).getMyFlair().then(response => {
+    return this.getSnoowrap().getSubreddit(this.SUBNAME).getMyFlair().then(response => {
       return {
         id: response.flair_template_id,
         text: response.flair_text
@@ -85,8 +91,8 @@ export class RedditAPIService {
   }
 
   getMe(): Promise<RedditAPIUser> {
-    return this.snoowrap.getMe().fetch().then(response => {
-      return this.snoowrap.oauthRequest({uri: `/user/${response.name}/about`, method: 'get'}).then(response => {
+    return this.getSnoowrap().getMe().fetch().then(response => {
+      return this.getSnoowrap().oauthRequest({uri: `/user/${response.name}/about`, method: 'get'}).then(response => {
         return {
           id: response.id,
           name: response.name,
@@ -102,7 +108,7 @@ export class RedditAPIService {
   /* #region POST */
 
   postClaim(submissionId: string) {
-    this.snoowrap.getSubmission(submissionId).expandReplies({limit: Infinity, depth: Infinity}).then(response => {
+    this.getSnoowrap().getSubmission(submissionId).expandReplies({limit: Infinity, depth: Infinity}).then(response => {
       const comments = response.comments;
       const cmt = comments.find(comment => comment.body.includes("If you would like to transcribe this post"));
       if (cmt !== undefined) {
@@ -114,7 +120,7 @@ export class RedditAPIService {
   }
 
   postUnclaim(submissionId: string) {
-    this.snoowrap.getSubmission(submissionId).expandReplies({limit: Infinity, depth: Infinity}).then(response => {
+    this.getSnoowrap().getSubmission(submissionId).expandReplies({limit: Infinity, depth: Infinity}).then(response => {
       const comments = response.comments;
       const cmt = comments.find(comment => comment.body.includes("The post is yours! Best of luck and thanks for helping!"));
       if (cmt !== undefined) {
@@ -126,7 +132,7 @@ export class RedditAPIService {
   }
 
   postDone(submissionId: string) {
-    this.snoowrap.getSubmission(submissionId).expandReplies({limit: Infinity, depth: Infinity}).then(response => {
+    this.getSnoowrap().getSubmission(submissionId).expandReplies({limit: Infinity, depth: Infinity}).then(response => {
       const comments = response.comments;
       const cmt = comments.find(comment => comment.body.includes("The post is yours! Best of luck and thanks for helping!"));
       if (cmt !== undefined) {
@@ -138,16 +144,16 @@ export class RedditAPIService {
   }
 
   postTranscription(submissionId: string, transcription: string) {
-    this.snoowrap.getSubmission(submissionId).reply(transcription);
+    this.getSnoowrap().getSubmission(submissionId).reply(transcription);
   }
 
   reportPost(submissionId: string, rule: RedditAPISubRule) {
-    this.snoowrap.getSubmission(submissionId).report({reason: rule.violationReason})
+    this.getSnoowrap().getSubmission(submissionId).report({reason: rule.violationReason})
   }
 
   /* #endregion */
 
   logAccessToken() {
-    console.log(this.snoowrap.accessToken)
+    console.log(this.getSnoowrap().accessToken)
   }
 }
