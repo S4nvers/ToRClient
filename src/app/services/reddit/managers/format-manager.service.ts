@@ -163,82 +163,238 @@ export class FormatManagerService {
 
   private getArtsAndImagesWithoutTextFormats(html: string): ToRFormat[] {
     const nodeList = this.getNodeList(html)
-    return []
+    return [
+      {
+        name: "Arts and images without text",
+        text: nodeList.item(0).innerHTML
+      }
+    ]
   }
 
   private getImagesWithTextFormats(html: string): ToRFormat[] {
     const nodeList = this.getNodeList(html)
-    return []
+    return [
+      {
+        name: "Images with text",
+        text: nodeList.item(0).innerHTML
+      }
+    ]
   }
 
   private getFourChanGreentextFormats(html: string): ToRFormat[] {
     const nodeList = this.getNodeList(html)
-    return []
+    return [
+      {
+        name: "FourChan and Greentext",
+        text: nodeList.item(0).innerHTML
+      }
+    ]
   }
 
   private getRedditPostCommentsFormats(html: string): ToRFormat[] {
     const nodeList = this.getNodeList(html)
-    return []
+    return [
+      {
+        name: "Reddit Post",
+        text: nodeList.item(0).innerHTML
+      },
+      {
+        name: "Reddit Comments",
+        text: nodeList.item(1).innerHTML
+      },
+      {
+        name: "Reddit Comments with reports",
+        text: nodeList.item(2).innerHTML
+      }
+    ]
   }
     
   private getSocialMediaFormats(html: string): ToRFormat[] {
     const nodeList = this.getNodeList(html)
-    return []
+    return [
+      {
+        name: "Facebook - Format",
+        text: nodeList.item(1).innerHTML
+      },
+      {
+        name: "Facebook - Comments and Replies",
+        text: nodeList.item(2).innerHTML
+      },
+      {
+        name: "Facebook Marketplace 1",
+        text: nodeList.item(3).innerHTML
+      },
+      {
+        name: "Facebook Marketplace 2",
+        text: nodeList.item(4).innerHTML
+      },
+      {
+        name: "Facebook Marketplace 3",
+        text: nodeList.item(5).innerHTML
+      },
+      {
+        name: "Tumblr",
+        text: nodeList.item(6).innerHTML
+      },
+      {
+        name: "Tumblr reblogging an image",
+        text: nodeList.item(7).innerHTML
+      },
+      {
+        name: "Tumblr with comments/asks",
+        text: nodeList.item(8).innerHTML
+      },
+      {
+        name: "Instagram",
+        text: nodeList.item(9).innerHTML
+      },
+      {
+        name: "Twitter post",
+        text: nodeList.item(10).innerHTML
+      },
+      {
+        name: "Twitter replies",
+        text: nodeList.item(11).innerHTML
+      }
+    ]
   }
     
   private getMessagesFormats(html: string): ToRFormat[] {
     const nodeList = this.getNodeList(html)
-    return []
+    return [
+      {
+        name: "Message",
+        text: nodeList.item(0).innerHTML
+      },
+      {
+        name: "Discord",
+        text: nodeList.item(1).innerHTML
+      },
+    ]
   }
     
   private getComicsFormats(html: string): ToRFormat[] {
     const nodeList = this.getNodeList(html)
-    return []
+    nodeList.forEach((node, index) => {
+      console.log(index)
+      console.log(node.innerHTML)
+    })
+    return [
+      {
+        name: "Comic",
+        text: nodeList.item(0).innerHTML
+      },
+    ]
   }
     
   private getGifsFormats(html: string): ToRFormat[] {
     const nodeList = this.getNodeList(html)
-    return []
+    return [
+      {
+        name: "Gifs",
+        text: nodeList.item(0).innerHTML
+      },
+    ]
   }
     
   private getCodeFormats(html: string): ToRFormat[] {
     const nodeList = this.getNodeList(html)
-    return []
+    return [
+      {
+        name: "Code",
+        text: nodeList.item(0).innerHTML
+      },
+    ]
   }
     
   private getMemeFormats(html: string): ToRFormat[] {
     const nodeList = this.getNodeList(html)
-    return []
+    return [
+      {
+        name: "Generic meme",
+        text: nodeList.item(0).innerHTML
+      },
+      {
+        name: "Advice animals meme",
+        text: nodeList.item(1).innerHTML
+      },
+    ]
   }
     
   private getQuoraFormats(html: string): ToRFormat[] {
     const nodeList = this.getNodeList(html)
-    return []
+    return [
+      {
+        name: "Quora",
+        text: nodeList.item(0).innerHTML
+      },
+    ]
   }
     
   private getPollsFormats(html: string): ToRFormat[] {
     const nodeList = this.getNodeList(html)
-    return []
+    return [
+      {
+        name: "Poll - Single selection",
+        text: nodeList.item(0).innerHTML
+      },
+      {
+        name: "Poll - Multi-selection",
+        text: nodeList.item(1).innerHTML
+      },
+      {
+        name: "Poll - Number of votes",
+        text: nodeList.item(2).innerHTML
+      },
+      {
+        name: "Poll - Shaded boxes",
+        text: nodeList.item(3).innerHTML
+      },
+      {
+        name: "Poll - Percentages",
+        text: nodeList.item(4).innerHTML
+      },
+    ]
   }
 
   private getBlaseballFormats(html: string): ToRFormat[] {
     const nodeList = this.getNodeList(html)
-    return []
+    return [
+      {
+        name: "Blaseball",
+        text: nodeList.item(0).innerHTML
+      },
+    ]
   }
 
   private getOtherSourcesFormats(html: string): ToRFormat[] {
     const nodeList = this.getNodeList(html)
-    return []
+    return [
+      {
+        name: "Other sources",
+        text: nodeList.item(0).innerHTML
+      },
+    ]
   }
 
   private getVideoPostsFormats(html: string): ToRFormat[] {
     const nodeList = this.getNodeList(html)
-    return []
+    return [
+      {
+        name: "Video posts",
+        text: nodeList.item(0).innerHTML
+      },
+    ]
   }
 
   private getAudioPostsFormats(html: string): ToRFormat[] {
     const nodeList = this.getNodeList(html)
-    return []
+    return [
+      {
+        name: "Audio posts",
+        text: nodeList.item(0).innerHTML
+      },
+    ]
   }
 
   private getNodeList(html: string) {
