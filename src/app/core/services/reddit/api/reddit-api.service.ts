@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as sw from 'snoowrap';
-import { RedditAPIComment, RedditAPIFlair, RedditAPIPost, RedditAPISubRule, RedditAPIUser, RedditAPIWikiPage } from '../../../types/RedditAPITypes';
+import { RedditAPIComment, RedditAPIFlair, RedditAPIPost, RedditAPISubRule, RedditAPIUser, RedditAPIWikiPage } from '../../../../types/RedditAPITypes';
 
 @Injectable({
   providedIn: 'root'

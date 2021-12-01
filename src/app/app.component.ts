@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { RedditAPIService } from './services/reddit/api/reddit-api.service';
-import { FormatManagerService } from './services/reddit/managers/format-manager.service';
+import { RedditAPIService } from './core/services/reddit/api/reddit-api.service';
+import { FormatManagerService } from './core/services/reddit/managers/format-manager.service';
 
 @Component({
   selector: 'app-root',

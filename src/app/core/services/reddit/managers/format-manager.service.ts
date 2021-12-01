@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ToRFormat, ToRFormatCategory } from '../../../types/ToRClientTypes';
+import { ToRFormat, ToRFormatCategory } from '../../../../types/ToRClientTypes';
 import { RedditAPIService } from '../api/reddit-api.service';
 
 @Injectable({
