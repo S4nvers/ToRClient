@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RedditAPIService } from './services/reddit/api/reddit-api.service';
+import { FormatManagerService } from './services/reddit/managers/format-manager.service';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +10,7 @@ import { RedditAPIService } from './services/reddit/api/reddit-api.service';
 export class AppComponent {
   title = 'ToRClient';
 
-  constructor(private api: RedditAPIService) { }
+  constructor(private api: RedditAPIService, private fm: FormatManagerService) { }
 
   getAllPosts() {
     this.api.getAllPosts();
@@ -23,16 +24,16 @@ export class AppComponent {
     this.api.getComments('r6asac');
   }
 
-  getWikiPages() {
-    this.api.getWikiPages();
-  }
-
   getWikiPage() {
     this.api.getWikiPage('guidelines').then(res => console.log(res.html));
   }
 
   getMe() {
     this.api.getMe();
+  }
+
+  getFormats() {
+    this.fm.getFormats();
   }
 
   logAccessToken() {

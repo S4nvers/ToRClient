@@ -17,7 +17,7 @@ import { MatSliderModule } from '@angular/material/slider';
     BrowserAnimationsModule,
     MatSliderModule
   ],
-  providers: [],
+  providers: [DOMParser],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

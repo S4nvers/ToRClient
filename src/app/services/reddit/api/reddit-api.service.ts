@@ -66,18 +66,6 @@ export class RedditAPIService {
     })
   }
 
-  getWikiPages(): Promise<RedditAPIWikiPage[]> {
-    return this.snoowrap.getSubreddit(this.SUBNAME).getWikiPages().then(response => {
-      var pr = response.map<Promise<RedditAPIWikiPage>>(page => page.fetch().then<RedditAPIWikiPage>(pageResponse => {
-          return {
-            name: pageResponse.name,
-            html: pageResponse.content_html
-          }
-        }))
-        return Promise.all(pr);
-    })
-  }
-
   getWikiPage(pageName: string): Promise<RedditAPIWikiPage> {
     return this.snoowrap.getSubreddit(this.SUBNAME).getWikiPage(pageName).fetch().then(response => {
       return {

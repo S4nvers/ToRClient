@@ -4,7 +4,6 @@ export interface ToRFormatCategory {
 }
 
 export interface ToRFormat {
-    category: string,
     name: string,
     text: string
 }
