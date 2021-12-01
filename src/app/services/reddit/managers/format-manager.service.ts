@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { RedditAPIWikiPage } from '../../../types/RedditAPITypes';
 import { ToRFormat, ToRFormatCategory } from '../../../types/ToRClientTypes';
 import { RedditAPIService } from '../api/reddit-api.service';
 
@@ -35,7 +34,8 @@ export class FormatManagerService {
     formatsPromises.push(this.api.getWikiPage(this.ARTS_AND_IMAGES_WITHOUT_TEXT).then<ToRFormatCategory>(response => {
       return {
         name: "Arts and images without text",
-        formats: this.getArtsAndImagesWithoutTextFormats(response.html)
+        formats: this.getArtsAndImagesWithoutTextFormats(response.html),
+        uri: this.ARTS_AND_IMAGES_WITHOUT_TEXT
       }
     }))
 
@@ -43,7 +43,8 @@ export class FormatManagerService {
     formatsPromises.push(this.api.getWikiPage(this.IMAGES_WITH_TEXT).then<ToRFormatCategory>(response => {
       return {
         name: "Images with text",
-        formats: this.getImagesWithTextFormats(response.html)
+        formats: this.getImagesWithTextFormats(response.html),
+        uri: this.IMAGES_WITH_TEXT
       }
     }))
 
@@ -51,7 +52,8 @@ export class FormatManagerService {
     formatsPromises.push(this.api.getWikiPage(this.FOUR_CHAN_GREENTEXT).then<ToRFormatCategory>(response => {
       return {
         name: "4Chan & pictures of Greentext",
-        formats: this.getFourChanGreentextFormats(response.html)
+        formats: this.getFourChanGreentextFormats(response.html),
+        uri: this.FOUR_CHAN_GREENTEXT
       }
     }))
 
@@ -59,7 +61,8 @@ export class FormatManagerService {
     formatsPromises.push(this.api.getWikiPage(this.REDDIT_POST_COMMENTS).then<ToRFormatCategory>(response => {
       return {
         name: "Reddit post and comments",
-        formats: this.getRedditPostCommentsFormats(response.html)
+        formats: this.getRedditPostCommentsFormats(response.html),
+        uri: this.REDDIT_POST_COMMENTS
       }
     }))
 
@@ -67,7 +70,8 @@ export class FormatManagerService {
     formatsPromises.push(this.api.getWikiPage(this.SOCIAL_MEDIA).then<ToRFormatCategory>(response => {
       return {
         name: "Social Media - Facebook, Instagram, Tumblr, Twitter",
-        formats: this.getSocialMediaFormats(response.html)
+        formats: this.getSocialMediaFormats(response.html),
+        uri: this.SOCIAL_MEDIA
       }
     }))
 
@@ -75,7 +79,8 @@ export class FormatManagerService {
     formatsPromises.push(this.api.getWikiPage(this.MESSAGES).then<ToRFormatCategory>(response => {
       return {
         name: "Text messages and other messaging apps",
-        formats: this.getMessagesFormats(response.html)
+        formats: this.getMessagesFormats(response.html),
+        uri: this.MESSAGES
       }
     }))
 
@@ -83,7 +88,8 @@ export class FormatManagerService {
     formatsPromises.push(this.api.getWikiPage(this.COMICS).then<ToRFormatCategory>(response => {
       return {
         name: "Comics",
-        formats: this.getComicsFormats(response.html)
+        formats: this.getComicsFormats(response.html),
+        uri: this.COMICS
       }
     }))
 
@@ -91,7 +97,8 @@ export class FormatManagerService {
     formatsPromises.push(this.api.getWikiPage(this.GIFS).then<ToRFormatCategory>(response => {
       return {
         name: "Gifs",
-        formats: this.getGifsFormats(response.html)
+        formats: this.getGifsFormats(response.html),
+        uri: this.GIFS
       }
     }))
 
@@ -99,7 +106,8 @@ export class FormatManagerService {
     formatsPromises.push(this.api.getWikiPage(this.CODE).then<ToRFormatCategory>(response => {
       return {
         name: "Code",
-        formats: this.getCodeFormats(response.html)
+        formats: this.getCodeFormats(response.html),
+        uri: this.CODE
       }
     }))
 
@@ -107,7 +115,8 @@ export class FormatManagerService {
     formatsPromises.push(this.api.getWikiPage(this.MEME).then<ToRFormatCategory>(response => {
       return {
         name: "Meme",
-        formats: this.getMemeFormats(response.html)
+        formats: this.getMemeFormats(response.html),
+        uri: this.MEME
       }
     }))
 
@@ -115,7 +124,8 @@ export class FormatManagerService {
     formatsPromises.push(this.api.getWikiPage(this.QUORA).then<ToRFormatCategory>(response => {
       return {
         name: "Quora",
-        formats: this.getQuoraFormats(response.html)
+        formats: this.getQuoraFormats(response.html),
+        uri: this.QUORA
       }
     }))
 
@@ -123,7 +133,8 @@ export class FormatManagerService {
     formatsPromises.push(this.api.getWikiPage(this.POLLS).then<ToRFormatCategory>(response => {
       return {
         name: "Polls",
-        formats: this.getPollsFormats(response.html)
+        formats: this.getPollsFormats(response.html),
+        uri: this.POLLS
       }
     }))
 
@@ -131,7 +142,8 @@ export class FormatManagerService {
     formatsPromises.push(this.api.getWikiPage(this.BLASEBALL).then<ToRFormatCategory>(response => {
       return {
         name: "Blaseball",
-        formats: this.getBlaseballFormats(response.html)
+        formats: this.getBlaseballFormats(response.html),
+        uri: this.BLASEBALL
       }
     }))
 
@@ -139,7 +151,8 @@ export class FormatManagerService {
     formatsPromises.push(this.api.getWikiPage(this.OTHER_SOURCES).then<ToRFormatCategory>(response => {
       return {
         name: "Other sources",
-        formats: this.getOtherSourcesFormats(response.html)
+        formats: this.getOtherSourcesFormats(response.html),
+        uri: this.OTHER_SOURCES
       }
     }))
 
@@ -147,7 +160,8 @@ export class FormatManagerService {
     formatsPromises.push(this.api.getWikiPage(this.VIDEO_POSTS).then<ToRFormatCategory>(response => {
       return {
         name: "",
-        formats: this.getVideoPostsFormats(response.html)
+        formats: this.getVideoPostsFormats(response.html),
+        uri: this.VIDEO_POSTS
       }
     }))
 
@@ -155,7 +169,8 @@ export class FormatManagerService {
     formatsPromises.push(this.api.getWikiPage(this.AUDIO_POSTS).then<ToRFormatCategory>(response => {
       return {
         name: "",
-        formats: this.getAudioPostsFormats(response.html)
+        formats: this.getAudioPostsFormats(response.html),
+        uri: this.AUDIO_POSTS
       }
     }))
     return Promise.all(formatsPromises)
