@@ -11,8 +11,8 @@ export class AuthService {
   readonly TOKEN_STORAGE = "ToRClientToken"
   readonly REFRESH_TOKEN_STORAGE = "ToRClientRefreshToken"
   readonly REDIRECT_URI = "http://localhost:4200/callback"
-  readonly CLIENT_ID = "g5nizpPrI801MZo8Xia6DA"
-  readonly SECRET = "k9zvujJNlmoOG92958RwflLhL9XKWQ"
+  readonly CLIENT_ID = "nope"
+  readonly SECRET = "never"
 
   constructor(
     private http: HttpClient
