@@ -1,0 +1,28 @@
+.root {
+    height: 100%;
+    display: flex;
+}
+
+.post-list {
+    display: flex;
+    overflow: auto;
+    flex: 3 0 0px;
+    flex-direction: column;
+}
+
+.right-side {
+    flex: 1 0 0px;
+    display: flex;
+    flex-direction: column;
+    overflow: auto;
+}
+
+.right-side-item {
+    flex: 1 0 0px;
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-items {
+    margin-top: 10px;
+}

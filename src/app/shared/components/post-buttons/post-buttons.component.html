@@ -1,0 +1,7 @@
+<div class="root">
+    <button mat-raised-button [disabled]="isDisabled()" (click)="openInReddit()">Open in Reddit</button>
+    <button mat-raised-button [disabled]="isDisabled()" *ngIf="!isClaimed()" color="primary" (click)="claim()">Claim</button>
+    <button mat-raised-button [disabled]="isDisabled()" *ngIf="isClaimed()" color="accent" (click)="unclaim()">Unclaim</button>
+    <button mat-raised-button [disabled]="isDisabled()" *ngIf="isClaimed()" color="primary">Done</button>
+    <button mat-raised-button [disabled]="isDisabled()" color="warn">Report</button>
+</div>

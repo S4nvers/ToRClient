@@ -10,6 +10,7 @@ import { CoreModule } from './core/core.module';
 import { PagesModule } from './pages/pages.module';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenGuard } from './core/services/reddit/guards/token.guard';
+import { MarkdownModule } from 'ngx-markdown';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { TokenGuard } from './core/services/reddit/guards/token.guard';
     BrowserAnimationsModule,
     SharedModule,
     CoreModule,
-    PagesModule
+    PagesModule,
+    MarkdownModule.forRoot()
   ],
   providers: [
     DOMParser,

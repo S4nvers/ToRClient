@@ -13,7 +13,6 @@ export class CallbackPageComponent implements OnInit {
 
   ngOnInit(): void {
       const code = this.route.snapshot.queryParamMap.get('code');
-      console.log(code)
       if(code) {
         this.auth.requestToken(code);
       }

@@ -1,0 +1,12 @@
+<div class="root">
+    <app-post-list (postSelected)="setSelected($event)" class="post-list"></app-post-list>
+    <mat-divider [vertical]="true"></mat-divider>
+    <div class="right-side">
+        <app-post-preview [post]="selected" class="right-side-item"></app-post-preview>
+        <mat-divider></mat-divider>
+        <div class="right-side-item">
+            <app-post-buttons [post]="selected" class="menu-items"></app-post-buttons>
+            <app-rules-list [post]="selected" class="menu-items"></app-rules-list>
+        </div>
+    </div>
+</div>

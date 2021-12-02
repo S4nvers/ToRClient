@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as Snoowrap from 'snoowrap';
-import { RedditAPIComment, RedditAPIFlair, RedditAPIPost, RedditAPISubRule, RedditAPIUser, RedditAPIWikiPage } from '../../../../types/RedditAPITypes';
+import { getEmptyRedditAPIPost, RedditAPIComment, RedditAPIFlair, RedditAPIPost, RedditAPIPostResponse, RedditAPISubRule, RedditAPIUser, RedditAPIWikiPage } from '../../../../types/RedditAPITypes';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({
@@ -32,9 +32,9 @@ export class RedditAPIService {
    * Get all posts from ToR-subreddit
    * @returns A promise containing all posts from ToR
    */
-  getAllPosts(): Promise<RedditAPIPost[]> {
+  getAllPosts(): Promise<RedditAPIPostResponse> {
     return this.getSnoowrap().getSubreddit(this.SUBNAME).getHot().then(response => {
-      return response.map<RedditAPIPost>(post => {
+      const posts: RedditAPIPost[] = response.map<RedditAPIPost>(post => {
         var flair: RedditAPIFlair | null = null;
         if(post.link_flair_template_id) {
           flair = {
@@ -46,9 +46,66 @@ export class RedditAPIService {
           id: post.id,
           title: post.title,
           thumbnail: post.thumbnail,
-          flair: flair
+          flair: flair,
+          url: post.url
         }
       })
+      return {
+        listing: response,
+        posts: posts
+      }
+    })
+  }
+
+  async getMorePosts(listing: Snoowrap.Listing<Snoowrap.Submission>): Promise<RedditAPIPostResponse> {
+    const newListing = await listing.fetchMore({amount: 30, append:true})
+    const postArr = newListing.map<RedditAPIPost>(post => {
+      var flair: RedditAPIFlair | null = null;
+        if(post.link_flair_template_id) {
+          flair = {
+            id: post.link_flair_template_id,
+            text: post.link_flair_text
+          }
+        }
+        return {
+          id: post.id,
+          title: post.title,
+          thumbnail: post.thumbnail,
+          flair: flair,
+          url: post.url
+        }
+    })
+    return {
+      listing: newListing,
+      posts: postArr
+    }
+  }
+
+  getPostWithUrl(url: string): Promise<RedditAPIPost> {
+    let regex: RegExp = /\/comments\/([^\/]+)\//
+    const arr = url.match(regex)
+    if(arr !== null) {
+      return this.getPost(arr[1])
+    }
+    return Promise.resolve(getEmptyRedditAPIPost())
+  }
+
+  getPost(id: string): Promise<RedditAPIPost> {
+    return this.getSnoowrap().getSubmission(id).fetch().then(post => {
+      var flair: RedditAPIFlair | null = null;
+        if(post.link_flair_template_id) {
+          flair = {
+            id: post.link_flair_template_id,
+            text: post.link_flair_text
+          }
+        }
+      return {
+        flair: flair,
+        id: post.id,
+        thumbnail: post.thumbnail,
+        title: post.title,
+        url: post.url
+      }
     })
   }
 
@@ -66,6 +123,15 @@ export class RedditAPIService {
         }
       })
     })
+  }
+
+  getRulesWithUrl(url: string): Promise<RedditAPISubRule[]> {
+    const regex: RegExp = /\/r\/([^\/]+)\//
+    const arr = url.match(regex)
+    if(arr !== null) {
+      return this.getRules(arr[1])
+    }
+    return Promise.resolve([])
   }
 
   /**
@@ -158,6 +224,12 @@ export class RedditAPIService {
     })
   }
 
+  getOwnComments() {
+    this.getSnoowrap().getMe().getComments().then(response => {
+      console.log(response)
+    })
+  }
+
   postDone(submissionId: string) {
     this.getSnoowrap().getSubmission(submissionId).expandReplies({limit: Infinity, depth: Infinity}).then(response => {
       const comments = response.comments;
@@ -179,8 +251,4 @@ export class RedditAPIService {
   }
 
   /* #endregion */
-
-  logAccessToken() {
-    console.log(this.getSnoowrap().accessToken)
-  }
 }
