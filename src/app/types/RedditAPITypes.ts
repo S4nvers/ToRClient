@@ -1,3 +1,4 @@
+import * as Snoowrap from "snoowrap";
 
 export interface RedditAPISubRule {
     short: string,
@@ -6,11 +7,30 @@ export interface RedditAPISubRule {
     violationReason: string
 }
 
+export interface RedditAPIPostResponse {
+    listing: Snoowrap.Listing<Snoowrap.Submission>,
+    posts: RedditAPIPost[]
+}
+
 export interface RedditAPIPost {
     id: string,
     flair: RedditAPIFlair | null,
     thumbnail: string
-    title: string
+    title: string,
+    url: string
+}
+
+export function getEmptyRedditAPIPost(): RedditAPIPost {
+    return {
+        id: "",
+        flair: {
+            id: "",
+            text: ""
+        },
+        thumbnail: "",
+        title: "",
+        url: ""
+    }
 }
 
 export interface RedditAPIFlair {

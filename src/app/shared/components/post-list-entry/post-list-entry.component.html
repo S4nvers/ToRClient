@@ -1,0 +1,8 @@
+<mat-card class="root" [ngClass]="{'grey-background': isSelected}" (click)="clicked()">
+    <div class="text-container">
+        <p>{{post.title}}</p>
+    </div>
+    <div class="image-container">
+        <img class="post-image" alt="post-image" [src]="post.thumbnail | safeImageURL"/>
+    </div>
+</mat-card>

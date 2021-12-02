@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { map } from 'rxjs';
+import { HttpClient } from '@angular/common/http'
 import { RedditAPITokenResponse } from '../../../../types/RedditAPITypes';
 
 @Injectable({
@@ -12,10 +11,16 @@ export class AuthService {
   readonly TOKEN_STORAGE = "ToRClientToken"
   readonly REFRESH_TOKEN_STORAGE = "ToRClientRefreshToken"
   readonly REDIRECT_URI = "http://localhost:4200/callback"
-  readonly CLIENT_ID = "g5nizpPrI801MZo8Xia6DA"
-  readonly SECRET = "Still not today"
+  readonly CLIENT_ID = "nope"
+  readonly SECRET = "never"
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient
+  ) { }
+
+  isLoggedIn(): boolean {
+    return true;
+  }
 
   storeToken(token: string) {
     localStorage.setItem(this.TOKEN_STORAGE, token)
@@ -28,20 +33,28 @@ export class AuthService {
   getToken(): string {
     const token = localStorage.getItem(this.TOKEN_STORAGE)
     if(token == null) {
-      const authString = `https://www.reddit.com/api/v1/authorize?client_id=${this.CLIENT_ID}&response_type=code&state=lorem&redirect_uri=${this.REDIRECT_URI}&duration=permanent&scope=edit identity mysubreddits read report submit wikiread`
-      document.location.href = encodeURI(authString)
+      this.login()
       return ""
     } else {
       return token
     }
   }
 
+  login() {
+    const authString = `https://www.reddit.com/api/v1/authorize?client_id=${this.CLIENT_ID}&response_type=code&state=lorem&redirect_uri=${this.REDIRECT_URI}&duration=permanent&scope=edit identity mysubreddits read report submit wikiread flair`
+    document.location.href = encodeURI(authString)
+  }
+
+  logout() {
+    localStorage.removeItem(this.TOKEN_STORAGE)
+    localStorage.removeItem(this.REFRESH_TOKEN_STORAGE)
+    console.log("logged out")
+  }
+
   getRefreshToken(): string {
     const token = localStorage.getItem(this.REFRESH_TOKEN_STORAGE)
     if(token == null) {
-      console.log("is null")
-      const authString = `https://www.reddit.com/api/v1/authorize?client_id=${this.CLIENT_ID}&response_type=code&state=lorem&redirect_uri=${this.REDIRECT_URI}&duration=permanent&scope=edit identity mysubreddits read report submit wikiread`
-      document.location.href = encodeURI(authString)
+      this.login();
       return ""
     } else {
       return token
@@ -55,7 +68,6 @@ export class AuthService {
         const body = (res.body as RedditAPITokenResponse)
         this.storeToken(body.access_token)
         this.storeRefreshToken(body.refresh_token)
-        console.log("stored")
       }
     })
   }

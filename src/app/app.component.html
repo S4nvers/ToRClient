@@ -1,18 +1,20 @@
-<router-outlet></router-outlet>
-
-<button (click)="getAllPosts()">Get all posts</button>
-
-
-<button (click)="getRules()">Get rules</button>
-
-
-<button (click)="getComments()">Get comments</button>
-
-
-<button (click)="getMe()">Get me</button>
-
-
-<button (click)="logAccessToken()">AccessToken</button>
-
-
-<button (click)="getFormats()">Get Formats</button>
+<div class=root>
+  <div>
+    <mat-toolbar class="header" color="primary">
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button>
+        <mat-icon class="hamburger-icon" aria-label="Side nav toggle icon">{{ isMenuOpen ? 'menu_open' : 'menu' }}
+        </mat-icon>
+      </button>
+      <p routerLink="/dashboard" routerLinkActive="active" class="logo" alt="logo"></p>
+      <span class="filler"></span>
+      <!-- TODO: Profile picture implementation -->
+      <img class="profile" alt="p" [src]="pfpUrl | safeImageURL" (click)="login()" />
+      <mat-chip-list aria-label="Fish selection">
+        <mat-chip>{{gamma}}</mat-chip>
+      </mat-chip-list>      
+    </mat-toolbar>
+  </div>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
