@@ -1,9 +1,15 @@
+import * as Snoowrap from "snoowrap";
 
 export interface RedditAPISubRule {
     short: string,
     description: string,
     priority: number,
     violationReason: string
+}
+
+export interface RedditAPIPostResponse {
+    listing: Snoowrap.Listing<Snoowrap.Submission>,
+    posts: RedditAPIPost[]
 }
 
 export interface RedditAPIPost {

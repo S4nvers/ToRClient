@@ -1,3 +1,18 @@
 .grey-background {
     background-color: grey;
 }
+
+.root {
+    display: flex;
+    grid-template-areas: "text text text image";
+}
+
+.text-container {
+    flex: 3 0 0px;
+    grid-area: text;
+}
+
+.image-container {
+    flex: 1 0 0px;
+    grid-area: image;
+}

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as Snoowrap from 'snoowrap';
-import { RedditAPIComment, RedditAPIFlair, RedditAPIPost, RedditAPISubRule, RedditAPIUser, RedditAPIWikiPage } from '../../../../types/RedditAPITypes';
+import { RedditAPIComment, RedditAPIFlair, RedditAPIPost, RedditAPIPostResponse, RedditAPISubRule, RedditAPIUser, RedditAPIWikiPage } from '../../../../types/RedditAPITypes';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({
@@ -32,9 +32,9 @@ export class RedditAPIService {
    * Get all posts from ToR-subreddit
    * @returns A promise containing all posts from ToR
    */
-  getAllPosts(): Promise<RedditAPIPost[]> {
+  getAllPosts(): Promise<RedditAPIPostResponse> {
     return this.getSnoowrap().getSubreddit(this.SUBNAME).getHot().then(response => {
-      return response.map<RedditAPIPost>(post => {
+      const posts: RedditAPIPost[] = response.map<RedditAPIPost>(post => {
         var flair: RedditAPIFlair | null = null;
         if(post.link_flair_template_id) {
           flair = {
@@ -49,7 +49,34 @@ export class RedditAPIService {
           flair: flair
         }
       })
+      return {
+        listing: response,
+        posts: posts
+      }
     })
+  }
+
+  async getMorePosts(listing: Snoowrap.Listing<Snoowrap.Submission>): Promise<RedditAPIPostResponse> {
+    const newListing = await listing.fetchMore({amount: 30, append:true})
+    const postArr = newListing.map<RedditAPIPost>(post => {
+      var flair: RedditAPIFlair | null = null;
+        if(post.link_flair_template_id) {
+          flair = {
+            id: post.link_flair_template_id,
+            text: post.link_flair_text
+          }
+        }
+        return {
+          id: post.id,
+          title: post.title,
+          thumbnail: post.thumbnail,
+          flair: flair
+        }
+    })
+    return {
+      listing: newListing,
+      posts: postArr
+    }
   }
 
   /**

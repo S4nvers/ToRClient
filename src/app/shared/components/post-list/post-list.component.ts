@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { RedditAPIService } from '../../../core/services/reddit/api/reddit-api.service';
+import { PostsManagerService } from '../../../core/services/reddit/managers/posts-manager.service';
 import { getEmptyRedditAPIPost as getEmptyRedditAPIPost, RedditAPIPost } from '../../../types/RedditAPITypes';
 
 @Component({
@@ -15,12 +16,11 @@ export class PostListComponent implements OnInit {
 
   @Output() postSelected = new EventEmitter<RedditAPIPost>()
 
-  constructor(private api: RedditAPIService) { }
+  constructor(private postManager: PostsManagerService) { }
 
   ngOnInit(): void {
-    this.api.getAllPosts().then(res => {
-      this.posts = res
-    })
+    this.postManager.current.subscribe(res => this.posts = res)
+    this.postManager.loadNext();
   }
 
   setSelected(post: RedditAPIPost) {
@@ -30,6 +30,10 @@ export class PostListComponent implements OnInit {
 
   isSelected(postId: string): boolean {
     return this.selected.id == postId;
+  }
+
+  loadMore() {
+    this.postManager.loadNext()
   }
 
 }
