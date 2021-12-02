@@ -18,11 +18,12 @@ export class AppComponent implements OnInit {
 
   pfpUrl = "assets/images/pfp.svg"
 
+  gamma = "- Γ"
+
   constructor(
     private userManager: UserManagerService,
-    private fm: FormatManagerService,
     private auth: AuthService,
-    private sanitizer: DomSanitizer
+    private api: RedditAPIService
   ) { }
 
   ngOnInit() {
@@ -30,38 +31,23 @@ export class AppComponent implements OnInit {
 
     if(this.auth.isLoggedIn()) {
       this.userManager.refresh()
+      this.getFlair()
     }
   }
 
   login() {
-    this.auth.login()
+    if(this.auth.isLoggedIn()) {
+      this.auth.logout()
+    } else {
+      this.auth.login()
+    }
   }
 
-  /*getAllPosts() {
-    this.api.getAllPosts();
+  getFlair() {
+    this.api.getUserGamma().then(res => {
+      if(res.text) {
+        this.gamma = res.text
+      }
+    })
   }
-
-  getRules() {
-    this.api.getRules('therewasanattempt');
-  }
-
-  getComments() {
-    this.api.getComments('r6asac');
-  }
-
-  getWikiPage() {
-    this.api.getWikiPage('guidelines').then(res => console.log(res.html));
-  }
-
-  getMe() {
-    this.api.getMe();
-  }
-
-  getFormats() {
-    this.fm.getFormats();
-  }
-
-  logAccessToken() {
-    this.api.logAccessToken();
-  }*/
 }

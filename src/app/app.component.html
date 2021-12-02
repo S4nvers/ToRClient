@@ -1,5 +1,5 @@
 <div class=root>
-  <div class="navbar">
+  <div>
     <mat-toolbar class="header" color="primary">
       <button type="button" aria-label="Toggle sidenav" mat-icon-button>
         <mat-icon class="hamburger-icon" aria-label="Side nav toggle icon">{{ isMenuOpen ? 'menu_open' : 'menu' }}
@@ -9,6 +9,9 @@
       <span class="filler"></span>
       <!-- TODO: Profile picture implementation -->
       <img class="profile" alt="p" [src]="pfpUrl | safeImageURL" (click)="login()" />
+      <mat-chip-list aria-label="Fish selection">
+        <mat-chip>{{gamma}}</mat-chip>
+      </mat-chip-list>      
     </mat-toolbar>
   </div>
   <div class="content">

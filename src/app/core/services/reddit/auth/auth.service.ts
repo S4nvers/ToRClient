@@ -41,8 +41,14 @@ export class AuthService {
   }
 
   login() {
-    const authString = `https://www.reddit.com/api/v1/authorize?client_id=${this.CLIENT_ID}&response_type=code&state=lorem&redirect_uri=${this.REDIRECT_URI}&duration=permanent&scope=edit identity mysubreddits read report submit wikiread`
+    const authString = `https://www.reddit.com/api/v1/authorize?client_id=${this.CLIENT_ID}&response_type=code&state=lorem&redirect_uri=${this.REDIRECT_URI}&duration=permanent&scope=edit identity mysubreddits read report submit wikiread flair`
     document.location.href = encodeURI(authString)
+  }
+
+  logout() {
+    localStorage.removeItem(this.TOKEN_STORAGE)
+    localStorage.removeItem(this.REFRESH_TOKEN_STORAGE)
+    console.log("logged out")
   }
 
   getRefreshToken(): string {
