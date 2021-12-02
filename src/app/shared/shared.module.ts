@@ -5,7 +5,8 @@ import { MatAllModule } from './mat-all/mat-all.module';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+  ],
   imports: [
     MatAllModule
   ],

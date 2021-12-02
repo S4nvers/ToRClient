@@ -1,18 +1,48 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RedditAPIService } from './core/services/reddit/api/reddit-api.service';
 import { FormatManagerService } from './core/services/reddit/managers/format-manager.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { AuthService } from './core/services/reddit/auth/auth.service';
+import { from, map, Observable, of } from 'rxjs';
+import { UserManagerService } from './core/services/reddit/managers/user-manager.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'ToRClient';
 
-  constructor(private api: RedditAPIService, private fm: FormatManagerService) { }
+  isMenuOpen = false;
 
-  getAllPosts() {
+  pfpUrl = "assets/images/pfp.svg"
+
+  constructor(
+    private userManager: UserManagerService,
+    private fm: FormatManagerService,
+    private auth: AuthService,
+    private sanitizer: DomSanitizer
+  ) { }
+
+  getUserImgUrl(): SafeUrl {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(this.pfpUrl);
+  }
+
+  ngOnInit() {
+    this.userManager.current.subscribe(user => this.pfpUrl = user.iconUrl)
+
+    if(this.auth.isLoggedIn()) {
+      console.log("logged in")
+      this.userManager.refresh()
+    }
+  }
+
+  login() {
+    this.auth.login()
+  }
+
+  /*getAllPosts() {
     this.api.getAllPosts();
   }
 
@@ -38,5 +68,5 @@ export class AppComponent {
 
   logAccessToken() {
     this.api.logAccessToken();
-  }
+  }*/
 }

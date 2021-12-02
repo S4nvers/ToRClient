@@ -1,18 +1,14 @@
+<div>
+    <div class="navbar">
+        <mat-toolbar class="header" color="primary">
+          <button type="button" aria-label="Toggle sidenav" mat-icon-button>
+            <mat-icon class="hamburger-icon" aria-label="Side nav toggle icon">{{ isMenuOpen ? 'menu_open' : 'menu' }}</mat-icon>
+          </button>
+          <p routerLink="/dashboard" routerLinkActive="active" class="logo" alt="logo"></p>
+          <span class="filler"></span>
+          <!-- TODO: Profile picture implementation -->
+          <img class="profile" alt="p" [src]="getUserImgUrl()" (click)="login()"/>
+        </mat-toolbar>
+      </div>
+</div>
 <router-outlet></router-outlet>
-
-<button (click)="getAllPosts()">Get all posts</button>
-
-
-<button (click)="getRules()">Get rules</button>
-
-
-<button (click)="getComments()">Get comments</button>
-
-
-<button (click)="getMe()">Get me</button>
-
-
-<button (click)="logAccessToken()">AccessToken</button>
-
-
-<button (click)="getFormats()">Get Formats</button>
