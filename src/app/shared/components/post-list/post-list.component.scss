@@ -1,10 +1,14 @@
 .post-entry {
     height: 100%;
     max-height: 100%;
-    margin-bottom: 10px;
+    margin: 10px;
+    width: 80%;
 }
 
 .post-list {
     max-height: 100%;
     overflow: auto !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

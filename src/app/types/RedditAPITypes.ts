@@ -16,7 +16,8 @@ export interface RedditAPIPost {
     id: string,
     flair: RedditAPIFlair | null,
     thumbnail: string
-    title: string
+    title: string,
+    url: string
 }
 
 export function getEmptyRedditAPIPost(): RedditAPIPost {
@@ -27,7 +28,8 @@ export function getEmptyRedditAPIPost(): RedditAPIPost {
             text: ""
         },
         thumbnail: "",
-        title: ""
+        title: "",
+        url: ""
     }
 }
 

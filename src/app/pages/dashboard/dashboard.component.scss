@@ -1,19 +1,21 @@
 .root {
     height: 100%;
-    display: grid;
-    grid-template-areas: "list list list preview" "list list list preview" "list list list menu";
+    display: flex;
 }
 
 .post-list {
-    grid-area: list;
     display: flex;
+    overflow: auto;
+    flex: 3 0 0px;
+}
+
+.right-side {
+    flex: 1 0 0px;
+    display: flex;
+    flex-direction: column;
     overflow: auto;
 }
 
-.post-preview {
-    grid-area: preview;
-}
-
-.menu {
-    grid-area: menu;
+.right-side-item {
+    flex: 1 0 0px;
 }

@@ -9,6 +9,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from '../core/core.module';
+import { RulesListComponent } from './components/rules-list/rules-list.component';
+import { MarkdownModule } from 'ngx-markdown';
 
 
 
@@ -16,7 +18,8 @@ import { CoreModule } from '../core/core.module';
   declarations: [
     PostListEntryComponent,
     PostListComponent,
-    PostPreviewComponent
+    PostPreviewComponent,
+    RulesListComponent
   ],
   imports: [
     CommonModule,
@@ -25,14 +28,16 @@ import { CoreModule } from '../core/core.module';
     BrowserModule,
     BrowserAnimationsModule,
     RouterModule,
-    CoreModule
+    CoreModule,
+    MarkdownModule.forChild()
   ],
   exports: [
     CommonModule,
     MatAllModule,
     PostListEntryComponent,
     PostListComponent,
-    PostPreviewComponent
+    PostPreviewComponent,
+    RulesListComponent
   ]
 })
 export class SharedModule { }

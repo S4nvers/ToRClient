@@ -1,7 +1,14 @@
 <div class="root">
     <app-post-list (postSelected)="setSelected($event)" class="post-list"></app-post-list>
-    <app-post-preview [post]="selected" class="post-preview"></app-post-preview>
-    <div class="menu">
-        <p>menu</p>
+    <mat-divider [vertical]="true"></mat-divider>
+    <div class="right-side">
+        <app-post-preview [post]="selected" class="right-side-item"></app-post-preview>
+        <mat-divider></mat-divider>
+        <div class="right-side-item">
+            <div class="right-side-item">
+                <p>menu</p>
+            </div>
+            <app-rules-list [post]="selected" class=""></app-rules-list>
+        </div>
     </div>
 </div>

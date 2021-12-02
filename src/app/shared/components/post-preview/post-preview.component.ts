@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { RedditAPIService } from '../../../core/services/reddit/api/reddit-api.service';
 import { getEmptyRedditAPIPost, RedditAPIPost } from '../../../types/RedditAPITypes';
 
 @Component({
@@ -8,9 +9,16 @@ import { getEmptyRedditAPIPost, RedditAPIPost } from '../../../types/RedditAPITy
 })
 export class PostPreviewComponent implements OnInit {
 
-  @Input() post: RedditAPIPost = getEmptyRedditAPIPost()
+  @Input()
+  set post(value: RedditAPIPost) {
+    this.api.getPostWithUrl(value.url).then(res => {
+      this.postToDisplay = res;
+    })
+  }
 
-  constructor() { }
+  postToDisplay: RedditAPIPost = getEmptyRedditAPIPost()
+
+  constructor(private api: RedditAPIService) { }
 
   ngOnInit(): void {
   }

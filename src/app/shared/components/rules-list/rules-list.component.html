@@ -1,0 +1,10 @@
+<mat-accordion>
+    <mat-expansion-panel *ngFor="let rule of rules">
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                {{rule.short}}
+            </mat-panel-title>
+        </mat-expansion-panel-header>
+        <markdown>{{rule.description}}</markdown>
+    </mat-expansion-panel>
+</mat-accordion>

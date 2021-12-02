@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as Snoowrap from 'snoowrap';
-import { RedditAPIComment, RedditAPIFlair, RedditAPIPost, RedditAPIPostResponse, RedditAPISubRule, RedditAPIUser, RedditAPIWikiPage } from '../../../../types/RedditAPITypes';
+import { getEmptyRedditAPIPost, RedditAPIComment, RedditAPIFlair, RedditAPIPost, RedditAPIPostResponse, RedditAPISubRule, RedditAPIUser, RedditAPIWikiPage } from '../../../../types/RedditAPITypes';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable({
@@ -46,7 +46,8 @@ export class RedditAPIService {
           id: post.id,
           title: post.title,
           thumbnail: post.thumbnail,
-          flair: flair
+          flair: flair,
+          url: post.url
         }
       })
       return {
@@ -70,13 +71,42 @@ export class RedditAPIService {
           id: post.id,
           title: post.title,
           thumbnail: post.thumbnail,
-          flair: flair
+          flair: flair,
+          url: post.url
         }
     })
     return {
       listing: newListing,
       posts: postArr
     }
+  }
+
+  getPostWithUrl(url: string): Promise<RedditAPIPost> {
+    let regex: RegExp = /\/comments\/([^\/]+)\//
+    const arr = url.match(regex)
+    if(arr !== null) {
+      return this.getPost(arr[1])
+    }
+    return Promise.resolve(getEmptyRedditAPIPost())
+  }
+
+  getPost(id: string): Promise<RedditAPIPost> {
+    return this.getSnoowrap().getSubmission(id).fetch().then(post => {
+      var flair: RedditAPIFlair | null = null;
+        if(post.link_flair_template_id) {
+          flair = {
+            id: post.link_flair_template_id,
+            text: post.link_flair_text
+          }
+        }
+      return {
+        flair: flair,
+        id: post.id,
+        thumbnail: post.thumbnail,
+        title: post.title,
+        url: post.url
+      }
+    })
   }
 
   /**
@@ -93,6 +123,15 @@ export class RedditAPIService {
         }
       })
     })
+  }
+
+  getRulesWithUrl(url: string): Promise<RedditAPISubRule[]> {
+    const regex: RegExp = /\/r\/([^\/]+)\//
+    const arr = url.match(regex)
+    if(arr !== null) {
+      return this.getRules(arr[1])
+    }
+    return Promise.resolve([])
   }
 
   /**
