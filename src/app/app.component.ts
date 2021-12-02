@@ -29,7 +29,6 @@ export class AppComponent implements OnInit {
     this.userManager.current.subscribe(user => this.pfpUrl = user.iconUrl)
 
     if(this.auth.isLoggedIn()) {
-      console.log("logged in")
       this.userManager.refresh()
     }
   }

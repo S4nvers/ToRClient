@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
   }
 
   setSelected(post: any) {
-    console.log(post)
+
     this.selected = post;
   }
 

@@ -290,10 +290,6 @@ export class FormatManagerService {
     
   private getComicsFormats(html: string): ToRFormat[] {
     const nodeList = this.getNodeList(html)
-    nodeList.forEach((node, index) => {
-      console.log(index)
-      console.log(node.innerHTML)
-    })
     return [
       {
         name: "Comic",

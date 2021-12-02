@@ -206,8 +206,4 @@ export class RedditAPIService {
   }
 
   /* #endregion */
-
-  logAccessToken() {
-    console.log(this.getSnoowrap().accessToken)
-  }
 }
