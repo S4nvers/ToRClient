@@ -224,6 +224,12 @@ export class RedditAPIService {
     })
   }
 
+  getOwnComments() {
+    this.getSnoowrap().getMe().getComments().then(response => {
+      console.log(response)
+    })
+  }
+
   postDone(submissionId: string) {
     this.getSnoowrap().getSubmission(submissionId).expandReplies({limit: Infinity, depth: Infinity}).then(response => {
       const comments = response.comments;
