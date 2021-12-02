@@ -8,6 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from './shared/shared.module';
 import { CoreModule } from './core/core.module';
 import { PagesModule } from './pages/pages.module';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenGuard } from './core/services/reddit/guards/token.guard';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,14 @@ import { PagesModule } from './pages/pages.module';
     CoreModule,
     PagesModule
   ],
-  providers: [DOMParser],
+  providers: [
+    DOMParser,
+    {
+      provide : HTTP_INTERCEPTORS,
+      useClass: TokenGuard,
+      multi   : true,
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

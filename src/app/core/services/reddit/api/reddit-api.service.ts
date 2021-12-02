@@ -18,9 +18,9 @@ export class RedditAPIService {
     if(!RedditAPIService.snoowrap) {
       RedditAPIService.snoowrap = new Snoowrap({
         userAgent: 'ToRClient by S4nvers',
-        clientId: 'g5nizpPrI801MZo8Xia6DA',
-        clientSecret: 'Not today', //IMPORTANT: NEVER COMMIT THIS
-        refreshToken: this.auth.getToken() //TODO need to obtain dynamically instead of hardcoded
+        clientId: this.auth.CLIENT_ID,
+        clientSecret: this.auth.SECRET,
+        refreshToken: this.auth.getRefreshToken()
       });
     }
     return RedditAPIService.snoowrap
@@ -28,6 +28,10 @@ export class RedditAPIService {
 
   /* #region GET */
 
+  /**
+   * Get all posts from ToR-subreddit
+   * @returns A promise containing all posts from ToR
+   */
   getAllPosts(): Promise<RedditAPIPost[]> {
     return this.getSnoowrap().getSubreddit(this.SUBNAME).getHot().then(response => {
       return response.map<RedditAPIPost>(post => {
@@ -48,6 +52,11 @@ export class RedditAPIService {
     })
   }
 
+  /**
+   * Gets all comments of a specified submission
+   * @param submissionId The submission id
+   * @returns A promise containing all Comments of the requested submission
+   */
   getComments(submissionId: string): Promise<RedditAPIComment[]> {
     return this.getSnoowrap().getSubmission(submissionId).expandReplies({limit: Infinity, depth: Infinity}).then(response => {
       return response.comments.map<RedditAPIComment>(comment => {
@@ -59,8 +68,13 @@ export class RedditAPIService {
     })
   }
 
-  getRules(sub: string): Promise<RedditAPISubRule[]> {
-    return this.getSnoowrap().getSubreddit(sub).getRules().then(response => {
+  /**
+   * Gets the rules of a specified subreddit
+   * @param subredditName The name of the subreddit
+   * @returns A promise containing the list of all of the requested subreddits rules
+   */
+  getRules(subredditName: string): Promise<RedditAPISubRule[]> {
+    return this.getSnoowrap().getSubreddit(subredditName).getRules().then(response => {
       return response.rules.map<RedditAPISubRule>(rule => {
         return {
           short: rule.short_name,
@@ -72,6 +86,11 @@ export class RedditAPIService {
     })
   }
 
+  /**
+   * Gets a requested wikipage
+   * @param pageName The name of the wikipage (eg. formats/images/reddit)
+   * @returns A promise containing the requested wikipage
+   */
   getWikiPage(pageName: string): Promise<RedditAPIWikiPage> {
     return this.getSnoowrap().getSubreddit(this.SUBNAME).getWikiPage(pageName).fetch().then(response => {
       return {
@@ -81,6 +100,10 @@ export class RedditAPIService {
     })
   }
 
+  /**
+   * Gets the flair for the ToR-subreddit
+   * @returns A promise containing a reddit user-flair
+   */
   getUserGamma(): Promise<RedditAPIFlair> {
     return this.getSnoowrap().getSubreddit(this.SUBNAME).getMyFlair().then(response => {
       return {
@@ -90,6 +113,10 @@ export class RedditAPIService {
     })
   }
 
+  /**
+   * Gets the currently logged in user
+   * @returns A promise containing the current user
+   */
   getMe(): Promise<RedditAPIUser> {
     return this.getSnoowrap().getMe().fetch().then(response => {
       return this.getSnoowrap().oauthRequest({uri: `/user/${response.name}/about`, method: 'get'}).then(response => {

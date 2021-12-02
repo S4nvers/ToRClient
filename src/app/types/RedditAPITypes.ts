@@ -34,3 +34,11 @@ export interface RedditAPIUser {
     iconUrl: string,
     karma: number
 }
+
+export interface RedditAPITokenResponse {
+    access_token: string
+    expires_in: number
+    refresh_token: string
+    scope: string
+    token_type: string
+}
