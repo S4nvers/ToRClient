@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { CoreModule } from '../core/core.module';
 import { RulesListComponent } from './components/rules-list/rules-list.component';
 import { MarkdownModule } from 'ngx-markdown';
+import { PostButtonsComponent } from './components/post-buttons/post-buttons.component';
 
 
 
@@ -19,7 +20,8 @@ import { MarkdownModule } from 'ngx-markdown';
     PostListEntryComponent,
     PostListComponent,
     PostPreviewComponent,
-    RulesListComponent
+    RulesListComponent,
+    PostButtonsComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +39,8 @@ import { MarkdownModule } from 'ngx-markdown';
     PostListEntryComponent,
     PostListComponent,
     PostPreviewComponent,
-    RulesListComponent
+    RulesListComponent,
+    PostButtonsComponent
   ]
 })
 export class SharedModule { }

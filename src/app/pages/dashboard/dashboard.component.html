@@ -5,10 +5,8 @@
         <app-post-preview [post]="selected" class="right-side-item"></app-post-preview>
         <mat-divider></mat-divider>
         <div class="right-side-item">
-            <div class="right-side-item">
-                <p>menu</p>
-            </div>
-            <app-rules-list [post]="selected" class=""></app-rules-list>
+            <app-post-buttons [post]="selected" class="menu-items"></app-post-buttons>
+            <app-rules-list [post]="selected" class="menu-items"></app-rules-list>
         </div>
     </div>
 </div>
