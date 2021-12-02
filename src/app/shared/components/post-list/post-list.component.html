@@ -1,0 +1,3 @@
+<div class="post-list">
+    <app-post-list-entry class="post-entry" *ngFor="let post of posts" [isSelected]="isSelected(post.id)" [post]="post" (selected)="setSelected(post)"></app-post-list-entry>
+</div>

@@ -13,6 +13,18 @@ export interface RedditAPIPost {
     title: string
 }
 
+export function getEmptyRedditAPIPost(): RedditAPIPost {
+    return {
+        id: "",
+        flair: {
+            id: "",
+            text: ""
+        },
+        thumbnail: "",
+        title: ""
+    }
+}
+
 export interface RedditAPIFlair {
     id: string,
     text: string | null

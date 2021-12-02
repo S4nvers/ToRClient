@@ -25,10 +25,6 @@ export class AppComponent implements OnInit {
     private sanitizer: DomSanitizer
   ) { }
 
-  getUserImgUrl(): SafeUrl {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(this.pfpUrl);
-  }
-
   ngOnInit() {
     this.userManager.current.subscribe(user => this.pfpUrl = user.iconUrl)
 

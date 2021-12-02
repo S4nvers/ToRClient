@@ -1,0 +1,19 @@
+.root {
+    height: 100%;
+    display: grid;
+    grid-template-areas: "list list list preview" "list list list preview" "list list list menu";
+}
+
+.post-list {
+    grid-area: list;
+    display: flex;
+    overflow: auto;
+}
+
+.post-preview {
+    grid-area: preview;
+}
+
+.menu {
+    grid-area: menu;
+}

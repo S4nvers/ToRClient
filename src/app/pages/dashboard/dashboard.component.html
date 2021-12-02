@@ -1,1 +1,7 @@
-<p>dashboard works!</p>
+<div class="root">
+    <app-post-list (postSelected)="setSelected($event)" class="post-list"></app-post-list>
+    <app-post-preview [post]="selected" class="post-preview"></app-post-preview>
+    <div class="menu">
+        <p>menu</p>
+    </div>
+</div>

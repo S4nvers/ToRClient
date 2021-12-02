@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { getEmptyRedditAPIPost, RedditAPIPost } from '../../types/RedditAPITypes';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,9 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DashboardComponent implements OnInit {
 
+  selected: RedditAPIPost = getEmptyRedditAPIPost()
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  setSelected(post: any) {
+    console.log(post)
+    this.selected = post;
   }
 
 }
