@@ -18,6 +18,16 @@ jobs:
           json: ${{ secrets.WEBHOST }} ${{ secrets.CLIENT_ID }} ${{ secrets.CLIENT_SECRET }}
           dir: 'src/assets/config/'
         uses: jsdaniell/create-json@1.1.2
+      - name: Log json
+        id: set_var
+        run: |
+          content=`cat src/assets/config/config.json`
+          # the following lines are only required for multi line json
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          # end of optional handling for multi line json
+          echo "::set-output name=packageJson::$content"
       - name: Use Node 14.x
         uses: actions/setup-node@v1
         with:
