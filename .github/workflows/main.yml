@@ -15,8 +15,8 @@ jobs:
       - name: create-json
         with:
           name: "config.json"
-          json: ${{ secrets.WEBHOST }}
-          dir: 'assets/config/'
+          json: '{"name":"jsdaniell", "password":"mypass"}'
+          dir: 'src/assets/config/'
         uses: jsdaniell/create-json@1.1.2
       - name: Use Node 14.x
         uses: actions/setup-node@v1
