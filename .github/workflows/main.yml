@@ -13,9 +13,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: create-json
+        env:
+          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }} 
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          WEBHOST: ${{ secrets.WEBHOST }}
         with:
           name: "config.json"
-          json: ${{ secrets.WEBHOST }} ${{ secrets.CLIENT_ID }} ${{ secrets.CLIENT_SECRET }}
+          json: '{"client_id":$CLIENT:ID, "client_secret":$CLIENT_SECRET, "webhost":$WEBHOST}'
           dir: 'src/assets/config/'
         uses: jsdaniell/create-json@1.1.2
       - name: Use Node 14.x
