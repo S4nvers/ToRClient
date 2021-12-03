@@ -16,12 +16,8 @@ jobs:
         with:
           name: "config.json"
           json: ${{ secrets.WEBHOST }} ${{ secrets.CLIENT_ID }} ${{ secrets.CLIENT_SECRET }}
-          dir: 'src/assets/config/'
+          dir: 'src/assets/config'
         uses: jsdaniell/create-json@1.1.2
-      - name: fetch the json value
-        run: |
-          githubjson=`cat src/assets/config/config.json`
-          echo $githubjson
       - name: Use Node 14.x
         uses: actions/setup-node@v1
         with:
