@@ -19,7 +19,7 @@ jobs:
           WEBHOST: ${{ secrets.WEBHOST }}
         with:
           name: "config.json"
-          json: ${{ secrets.WEBHOST }} ${{ secrets.CLIENT_ID }} ${{ secrets.CLIENT_SECRET }}
+          json: ${{ secrets.WEBHOST }}
           dir: 'src/assets/config/'
         uses: jsdaniell/create-json@1.1.2
       - name: Use Node 14.x
