@@ -1,5 +1,5 @@
 {
-    "webhost": "http://localhost:2400",
-    "client_id": "",
-    "client_secret": ""
+    "webhost": "http://localhost:2400/",
+    "client_id": "lorem",
+    "client_secret": "ipsum"
 }

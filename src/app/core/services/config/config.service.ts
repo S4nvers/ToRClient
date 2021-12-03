@@ -7,20 +7,21 @@ import { Configuration } from './config-model';
 })
 export class ConfigService {
   private httpClient: HttpClient;
-  private config: Configuration = new Configuration("", "", "");
+  private config: Configuration = new Configuration("", "", "")
 
   constructor( httpBackend: HttpBackend) {
-     this.httpClient = new HttpClient(httpBackend);
+     this.httpClient = new HttpClient(httpBackend)
   }
 
   load(url: string) {
     return new Promise<void>((resolve) => this.httpClient.get<Configuration>(url).subscribe(config => {
-      this.config = config;
-      resolve();
+      this.config = config
+      console.log(config)
+      resolve()
     }));
   }
 
   getConfiguration(): Configuration {
-    return this.config;
+    return this.config
   }
 }
