@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --base-href /ToRClient/",
+    "build": "ng build",
+    "deploy": "ng build --base-href https://s4nvers.github.io/ToRClient/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
   },
