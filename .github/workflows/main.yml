@@ -12,16 +12,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: create-json
-        env:
-          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }} 
-          CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          WEBHOST: ${{ secrets.WEBHOST }}
+      - name: Update webhost
+        uses: jossef/action-set-json-field@v1
         with:
-          name: "config.json"
-          json: ${{ secrets.WEBHOST }}
-          dir: 'src/assets/config/'
-        uses: jsdaniell/create-json@1.1.2
+          file: src/assets/config/config.json
+          field: webhost
+          value: ${{ secrets.WEBHOST }}
+      - name: Update client id
+        uses: jossef/action-set-json-field@v1
+        with:
+          file: src/assets/config/config.json
+          field: client_id
+          value: ${{ secrets.CLIENT_ID }}
+      - name: Update client secret
+        uses: jossef/action-set-json-field@v1
+        with:
+          file: src/assets/config/config.json
+          field: client_secret
+          value: ${{ secrets.CLIENT_SECRET }}
       - name: Use Node 14.x
         uses: actions/setup-node@v1
         with:
