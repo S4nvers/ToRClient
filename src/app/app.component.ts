@@ -16,6 +16,8 @@ export class AppComponent implements OnInit {
 
   isMenuOpen = false;
 
+  isDarkTheme = true;
+
   pfpUrl = "assets/images/pfp.svg"
 
   gamma = "- Γ"
